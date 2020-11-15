@@ -3,8 +3,6 @@ from pprint import pprint
 
 from MachineLearning.classify import predict
 
-bad_words = ["sexy", "hot", "sex"]
-
 class Utilities(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -47,14 +45,9 @@ class Utilities(commands.Cog):
         if message.author.bot:
             return
 
-        prediction = predict(message.content)
-        prediction = 0
+        prediction = predict(message.content)[0]
 
-        for word in bad_words:
-            if word in message.content:
-                prediction = 1
-
-        if prediction == 1:
+        if prediction == 0:
             await message.channel.send("Your message might have been inappropriate.") 
 
 
