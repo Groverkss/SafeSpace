@@ -13,9 +13,9 @@ from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
-# from sklearn.linear_model import LogisticRegression
+from sklearn.linear_model import LogisticRegression
 # from sklearn.naive_bayes import GaussianNB
-from sklearn import svm
+# from sklearn import svm
 from sklearn.metrics import plot_confusion_matrix, confusion_matrix
 
 import matplotlib.pyplot as plt
@@ -23,25 +23,18 @@ import matplotlib.pyplot as plt
 def make_data():
     global sentences
     global y
-    nsfw_sentences = []
-    with open("../NSFWCorpus/nsfw.txt") as f:
-        nsfw_sentences = f.readlines()
+    nsfw_sentences = open("../NSFWCorpus/nsfw.txt").readlines()
     y1 = len(nsfw_sentences)
-
-    general_sentences = []
-    for corpus in [gutenberg, webtext]:
-        for fileid in corpus.fileids():
-            sentences = corpus.raw(fileid)
-            
-            if len(sentences) > 64050:
-                sentences = sentences[:64050]
-
-            for sentence in sentences:
-                general_sentences.append(sentence)
+    general_sentences = open("../GeneralCorpus/general.txt").readlines()    
     y2 = len(general_sentences)
+    nsfw_sentences = nsfw_sentences[:y2]
+    y1 = len(nsfw_sentences)
+    # print(y1)
+    # print(y2)
 
     sentences = [sentence for sentence in nsfw_sentences]
     sentences += [sentence for sentence in general_sentences]
+
     y = [0]*y1
     y += [1]*y2
 
@@ -60,7 +53,7 @@ def make_model():
     classify = Pipeline([
         ('vect', CountVectorizer()),
         ('tfidf', TfidfTransformer()),
-        ('clf', svm.SVC()),
+        ('clf', LogisticRegression(max_iter=1000)),
     ])
 
 def fit_model(split_data=True):
@@ -87,14 +80,15 @@ def predict(input_text):
     return classify.predict([input_text])
 
 if __name__ == "__main__":
-    make_data()
-    print("Loaded Data")
-    make_model()
-    print("Loaded Model")
-    fit_model()
-    print("Fitted Model")
-    save_model()
-    print("Saved Model")
+    # make_data()
+    # print("Loaded Data")
+    # make_model()
+    # print("Loaded Model")
+    # fit_model()
+    # print("Fitted Model")
+    # save_model()
+    # print("Saved Model")
 
     # load_model()
-    # print(predict("sex"))
+    # print("Loaded Model")
+    # print(predict("hello world"))
