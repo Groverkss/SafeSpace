@@ -5,6 +5,10 @@ from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import plot_confusion_matrix, confusion_matrix
 
+import sys
+
+sys.path.append("../")
+
 import matplotlib.pyplot as plt
 
 sentences = [
