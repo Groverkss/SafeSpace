@@ -1,8 +1,5 @@
 import random
 
-import sys
-sys.path.append("../")
-
 import pickle
 import numpy as np
 
@@ -23,9 +20,9 @@ import matplotlib.pyplot as plt
 def make_data():
     global sentences
     global y
-    nsfw_sentences = open("../NSFWCorpus/nsfw.txt").readlines()
+    nsfw_sentences = open("./NSFWCorpus/nsfw.txt").readlines()
     y1 = len(nsfw_sentences)
-    general_sentences = open("../GeneralCorpus/general.txt").readlines()    
+    general_sentences = open("./GeneralCorpus/general.txt").readlines()    
     y2 = len(general_sentences)
     nsfw_sentences = nsfw_sentences[:y2]
     y1 = len(nsfw_sentences)
@@ -74,21 +71,7 @@ def save_model():
 
 def load_model():
     global classify
-    classify = pickle.load(open('classifier.model', 'rb'))
 
 def predict(input_text):
+    classify = pickle.load(open('./MachineLearning/classifier.model', 'rb'))
     return classify.predict([input_text])
-
-if __name__ == "__main__":
-    # make_data()
-    # print("Loaded Data")
-    # make_model()
-    # print("Loaded Model")
-    # fit_model()
-    # print("Fitted Model")
-    # save_model()
-    # print("Saved Model")
-
-    # load_model()
-    # print("Loaded Model")
-    # print(predict("hello world"))
